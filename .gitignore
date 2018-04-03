@@ -1,0 +1,14 @@
+frontend/dist/
+frontend/node_modules/
+frontend/npm-debug.log*
+frontend/yarn-error.log*
+
+frontend/# IDEs
+frontend/.idea/
+frontend/jsconfig.json
+frontend/.vscode/
+
+backend/.vs
+backend/obj/*.*
+backend/**/bin
+backend/**/obj

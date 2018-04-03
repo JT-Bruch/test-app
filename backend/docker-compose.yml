@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  justadevblog.api:
+    image: justadevblog.api
+    build:
+      context: .
+      dockerfile: JustADevBlog.Api/Dockerfile
