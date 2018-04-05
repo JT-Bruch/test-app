@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TestApiService } from './testapi.service';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +7,10 @@ import { TestApiService } from './testapi.service';
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  values = '0';
-  constructor(private testService: TestApiService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.testService.getHero(1).subscribe(values => this.values = values);
-  }
 
+  }
 
 }
