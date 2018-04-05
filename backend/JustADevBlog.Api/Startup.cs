@@ -32,8 +32,15 @@ namespace JustADevBlog.Api
     /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvc();
-      services.AddCors();
+
+      services.AddCors(options =>
+      {
+        options.AddPolicy("AllowSpecificOrigin", builder => 
+                builder.WithOrigins(Configuration["FrontEndAddress"])
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+        );
+      });
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new Info { Title = "Just a Dev Blog - API", Version = "v1" });
@@ -42,6 +49,7 @@ namespace JustADevBlog.Api
         var xmlPath = Path.Combine(basePath, $"{Constants.JustADevBlog}.Api.xml");
         c.IncludeXmlComments(xmlPath);
       });
+      services.AddMvc();
     }
 
 
@@ -56,18 +64,20 @@ namespace JustADevBlog.Api
       {
         app.UseDeveloperExceptionPage();
       }
+      // Shows UseCors with named policy.
+      app.UseCors("AllowSpecificOrigin");
       // Enable middleware to serve generated Swagger as a JSON endpoint.
       app.UseSwagger();
 
       // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
       app.UseSwaggerUI(c =>
       {
-        c.SwaggerEndpoint($"/swagger/V1/swagger.json", "My API V1");
+        c.SwaggerEndpoint($"/swagger/V1/swagger.json", "Just a Dev Blog - API.v1");
         c.RoutePrefix = string.Empty;
       });
 
       app.UseMvc();
-      app.UseCors(builder => builder.WithOrigins(Configuration["FrontendAddress"]).AllowAnyHeader());
+
     }
   }
 }
